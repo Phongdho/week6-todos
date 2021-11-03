@@ -37,6 +37,17 @@ const reducer = (state=initialState, action) => {
             todos: newArr,
         }
     }
+
+    if (action.type === "edit") {
+        // const newArr = state.todos.filter((todo) => todo.id === action.payload)
+        // const newTodoEdit = {... newArr, text: action.text}
+        // const newArray = state.todos.map((todo) => todo.id === action.payload ? newTodoEdit : todo)
+        const newArray = state.todos.map((todo) => todo.id === action.payload ? {...todo, text: action.text} : todo)
+        return {
+            todos: newArray,
+        }
+    }
+
     if (action.type === "complete") {
         const newArr = state.todos.map(todo => {
             if (todo.id === action.payload) {
@@ -56,6 +67,24 @@ const reducer = (state=initialState, action) => {
                 todo.color = color;
                 return todo;
             }
+            return todo;
+        })
+        return {
+            todos: newArr,
+        }
+    }
+    if (action.type === 'allCompleted') {
+        const newArr = state.todos.map((todo) => {
+            todo.completed = true;
+            return todo;
+        })
+        return {
+            todos: newArr,
+        }
+    }
+    if (action.type === 'clearCompleted') {
+        const newArr = state.todos.map((todo) => {
+            todo.completed = false;
             return todo;
         })
         return {
